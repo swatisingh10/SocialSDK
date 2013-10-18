@@ -19,7 +19,6 @@ package com.ibm.sbt.services.client.connections.blogs;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.ibm.commons.util.StringUtil;
 import com.ibm.sbt.services.client.ClientService;
 import com.ibm.sbt.services.client.ClientServicesException;
@@ -83,7 +82,7 @@ public class BlogService extends BaseService {
 	/**
 	 * This method returns the all blogs
 	 * 
-	 * @return
+	 * @return BlogList
 	 * @throws ForumServiceException
 	 */
 	public BlogList getBlogs() throws BlogServiceException{
@@ -95,7 +94,7 @@ public class BlogService extends BaseService {
 	 * This method returns the all blogs
 	 * 
 	 * @param parameters
-	 * @return
+	 * @return BlogList
 	 * @throws BlogServiceException
 	 */
 	public BlogList getBlogs(Map<String, String> parameters) throws BlogServiceException {
@@ -119,7 +118,7 @@ public class BlogService extends BaseService {
 	/**
 	 * This method returns My blogs
 	 * 
-	 * @return
+	 * @return BlogList
 	 * @throws ForumServiceException
 	 */
 	public BlogList getMyBlogs() throws BlogServiceException{
@@ -131,7 +130,7 @@ public class BlogService extends BaseService {
 	 * This method returns My blogs
 	 * 
 	 * @param parameters
-	 * @return
+	 * @return BlogList
 	 * @throws BlogServiceException
 	 */
 	public BlogList getMyBlogs(Map<String, String> parameters) throws BlogServiceException {
@@ -347,6 +346,7 @@ public class BlogService extends BaseService {
 	/**
 	 * This method returns the most recent posts for a particular Blog
 	 * 
+	 * @param blogHandle
 	 * @return PostList
 	 * @throws BlogServiceException
 	 */
@@ -358,6 +358,7 @@ public class BlogService extends BaseService {
 	/**
 	 * This method returns the most recent posts for a particular Blog
 	 * 
+	 * @param blogHandle
 	 * @param parameters
 	 * @return PostList
 	 * @throws BlogServiceException
@@ -382,6 +383,7 @@ public class BlogService extends BaseService {
 	/**
 	 * This method returns the latest comments for a particular Blog
 	 * 
+	 * @param blogHandle
 	 * @return CommentList
 	 * @throws BlogServiceException
 	 */
@@ -393,6 +395,7 @@ public class BlogService extends BaseService {
 	/**
 	 * This method returns the latest comments for a particular Blog
 	 * 
+	 * @param blogHandle
 	 * @param parameters
 	 * @return CommentList
 	 * @throws BlogServiceException
@@ -417,6 +420,7 @@ public class BlogService extends BaseService {
 	/**
 	 * This method returns the tags for a particular blog
 	 * 
+	 * @param blogHandle
 	 * @return TagList
 	 * @throws BlogServiceException
 	 */
@@ -468,10 +472,8 @@ public class BlogService extends BaseService {
 	
 	/**
 	 * Wrapper method to update a Blog 
-	 * <p>
 	 * 
-	 * @param Post
-	 * @param blogHandle
+	 * @param Blog
 	 * @throws BlogServiceException
 	 */
 	public void updateBlog(Blog blog) throws BlogServiceException {
@@ -497,23 +499,23 @@ public class BlogService extends BaseService {
 	}
 	
 	/**
-	 * Wrapper method to delete a post
+	 * Wrapper method to delete a postBlog
 	 * <p>
 	 * User should be logged in as a owner of the Blog to call this method.
 	 * 
 	 * @param String
-	 * 				postUuid which is to be deleted
+	 * 				blogUuid of Blog which is to be deleted
 	 * @throws BlogServiceException
 	 */
 	public void removeBlog(String blogUuid) throws BlogServiceException {
 		if (StringUtil.isEmpty(blogUuid)){
-			throw new BlogServiceException(null, "null blog id");
+			throw new BlogServiceException(null, "null blog Uuid");
 		}
 		try {
 			String deleteBlogUrl = resolveUrl(BLOG_HANDLE, FilterType.UPDATE_REMOVE_BLOG, blogUuid);
 			getClientService().delete(deleteBlogUrl);
 		} catch (Exception e) {
-			throw new BlogServiceException(e,"error deleting post");
+			throw new BlogServiceException(e,"error deleting Blog");
 		} 	
 		
 	}
@@ -524,7 +526,7 @@ public class BlogService extends BaseService {
 	 * 
 	 * @param blogHandle
 	 * @param postUuid
-	 * @return Post
+	 * @return BlogPost
 	 * @throws BlogServiceException
 	 */
 	public BlogPost getBlogPost(String blogHandle, String postUuid) throws BlogServiceException {
@@ -548,7 +550,6 @@ public class BlogService extends BaseService {
 	}
 	/**
 	 * Wrapper method to recommend/like a post
-	 * <p>
 	 * 
 	 * @param blogHandle
 	 * @param postUuid
@@ -572,7 +573,6 @@ public class BlogService extends BaseService {
 	}
 	/**
 	 * Wrapper method to unrecommend/unlike a post
-	 * <p>
 	 * 
 	 * @param blogHandle
 	 * @param postUuid
@@ -598,9 +598,9 @@ public class BlogService extends BaseService {
 	 * <p>
 	 * User should be authenticated to call this method
 	 * 
-	 * @param Post
+	 * @param BlogPost
 	 * @param blogHandle
-	 * @return Post
+	 * @return BlogPost
 	 * @throws BlogServiceException
 	 */
 	public BlogPost createBlogPost(BlogPost post, String blogHandle) throws BlogServiceException {
@@ -628,7 +628,7 @@ public class BlogService extends BaseService {
 	 * Wrapper method to update a Blog Post
 	 * <p>
 	 * 
-	 * @param Post
+	 * @param BlogPost
 	 * @param blogHandle
 	 * @throws BlogServiceException
 	 */
@@ -744,19 +744,19 @@ public class BlogService extends BaseService {
 	 * <p>
 	 * 
 	 * @param blogHandle
-	 * @param commentId
+	 * @param commentUuid
 	 * @return Comment
 	 * @throws BlogServiceException
 	 */
-	public void removeBlogComment(String blogHandle, String commentId) throws BlogServiceException {
+	public void removeBlogComment(String blogHandle, String commentUuid) throws BlogServiceException {
 		if (StringUtil.isEmpty(blogHandle)){
 			throw new BlogServiceException(null,"blog handle is null");
 		}
-		if (StringUtil.isEmpty(commentId)){
-			throw new BlogServiceException(null,"commentID is null");
+		if (StringUtil.isEmpty(commentUuid)){
+			throw new BlogServiceException(null,"commentUuid is null");
 		}
 		try {
-			String getCommentUrl = resolveUrl(blogHandle, FilterType.GET_REMOVE_COMMENT, commentId);
+			String getCommentUrl = resolveUrl(blogHandle, FilterType.GET_REMOVE_COMMENT, commentUuid);
 			getClientService().delete(getCommentUrl);
 		} catch (Exception e) {
 			throw new BlogServiceException(e, "error deleting blog comment");
