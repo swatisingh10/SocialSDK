@@ -16,7 +16,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@page import="com.ibm.sbt.services.client.connections.blogs.BlogService"%>
 <%@page import="com.ibm.sbt.services.client.connections.blogs.Blog"%>
-<%@page import="com.ibm.sbt.services.client.connections.blogs.Post"%>
+<%@page import="com.ibm.sbt.services.client.connections.blogs.BlogPost"%>
 <%@page import="com.ibm.sbt.services.client.connections.blogs.BlogList"%>
 <%@page import="com.ibm.sbt.services.client.connections.blogs.PostList"%>
 <%@page import="com.ibm.sbt.services.client.connections.blogs.Comment"%>
@@ -46,7 +46,7 @@
 			String blogHandle = ((Blog)blogs.get(0)).getHandle();
 			PostList posts = service.getBlogPosts(blogHandle);
 			if(posts.size()>0){
-				String postId = ((Post)posts.get(0)).getUid();
+				String postId = ((BlogPost)posts.get(0)).getUid();
 				Comment comment = new Comment(service, "");
 				Long random = System.currentTimeMillis();
 				comment.setTitle("Test Blog Comment" + random);

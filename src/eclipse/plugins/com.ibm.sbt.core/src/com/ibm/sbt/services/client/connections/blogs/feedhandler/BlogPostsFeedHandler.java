@@ -27,7 +27,7 @@ import com.ibm.sbt.services.client.base.ConnectionsConstants;
 import com.ibm.sbt.services.client.base.datahandlers.EntityList;
 import com.ibm.sbt.services.client.base.datahandlers.XmlDataHandler;
 import com.ibm.sbt.services.client.connections.blogs.BlogService;
-import com.ibm.sbt.services.client.connections.blogs.Post;
+import com.ibm.sbt.services.client.connections.blogs.BlogPost;
 import com.ibm.sbt.services.client.connections.blogs.PostList;
 import com.ibm.sbt.services.client.connections.blogs.model.BaseBlogEntity;
 import com.ibm.sbt.services.client.connections.blogs.model.BlogXPath;
@@ -40,7 +40,7 @@ import com.ibm.sbt.services.client.connections.blogs.model.BlogXPath;
  * @author Swati Singh
  */
 
-public class PostsFeedHandler extends BlogsFeedHandler  {
+public class BlogPostsFeedHandler extends BlogsFeedHandler  {
 	
 	
 	/**
@@ -48,7 +48,7 @@ public class PostsFeedHandler extends BlogsFeedHandler  {
 	 * 
 	 * @param service
 	 */
-	public PostsFeedHandler(BlogService service){
+	public BlogPostsFeedHandler(BlogService service){
 		super(service);
 	}
 
@@ -59,7 +59,7 @@ public class PostsFeedHandler extends BlogsFeedHandler  {
 		Node node = (Node)data;
 		XPathExpression expr = (data instanceof Document) ? (XPathExpression)BlogXPath.singleEntry.getPath() : null;
 		XmlDataHandler handler = new XmlDataHandler(node, ConnectionsConstants.nameSpaceCtx, expr);
-		BaseBlogEntity post = new Post(getService(), handler);
+		BaseBlogEntity post = new BlogPost(getService(), handler);
 		return post;
 	}
 

@@ -22,7 +22,7 @@
 <%@page import="com.ibm.sbt.services.client.connections.blogs.BlogList"%>
 <%@page import="com.ibm.sbt.services.client.connections.blogs.Blog"%>
 <%@page import="com.ibm.sbt.services.client.connections.blogs.PostList"%>
-<%@page import="com.ibm.sbt.services.client.connections.blogs.Post"%>
+<%@page import="com.ibm.sbt.services.client.connections.blogs.BlogPost"%>
 <%@page import="com.ibm.sbt.services.client.connections.blogs.model.Author"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="com.ibm.sbt.services.client.connections.activitystreams.model.Reply"%>
@@ -32,7 +32,7 @@
 <html>
 
 <head>
-<title>SBT JAVA Sample - UnRecommend a Blog Post</title>
+<title>SBT JAVA Sample - Unrecommend a Blog Post</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 
@@ -47,7 +47,7 @@
 			PostList posts = service.getBlogPosts(blog.getHandle());
 			if(posts.size()>0){
 				String postId = posts.get(0).getUid();
-				service.unRecommendPost(blog.getHandle(), postId);
+				service.unrecommendPost(blog.getHandle(), postId);
 				out.println("un-recommended post with id"+ postId);
 			}
 			else{
