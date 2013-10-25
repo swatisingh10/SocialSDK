@@ -31,7 +31,9 @@ import com.ibm.sbt.services.client.connections.blogs.feedhandler.BlogsFeedHandle
 import com.ibm.sbt.services.client.connections.blogs.feedhandler.CommentsFeedHandler;
 import com.ibm.sbt.services.client.connections.blogs.feedhandler.BlogPostsFeedHandler;
 import com.ibm.sbt.services.client.connections.blogs.feedhandler.TagFeedHandler;
+import com.ibm.sbt.services.client.connections.blogs.model.BlogXPath;
 import com.ibm.sbt.services.client.connections.blogs.transformers.BaseBlogTransformer;
+import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
 import com.ibm.sbt.services.endpoints.Endpoint;
 import com.ibm.sbt.services.util.AuthUtil;
 
@@ -480,6 +482,13 @@ public class BlogService extends BaseService {
 			throw new BlogServiceException(null,"null blog");
 		}
 		try {
+			if(blog.getFieldsMap().get(BlogXPath.title)== null)
+				blog.setTitle(blog.getTitle());
+			if(blog.getFieldsMap().get(BlogXPath.summary)== null)
+				blog.setSummary(blog.getSummary());
+			if(blog.getFieldsMap().get(BlogXPath.handle)== null)
+				blog.setHandle(blog.getHandle());
+			
 			BaseBlogTransformer transformer = new BaseBlogTransformer(blog);
 			Object 	payload = transformer.transform(blog.getFieldsMap());
 			
@@ -641,6 +650,11 @@ public class BlogService extends BaseService {
 			throw new BlogServiceException(null,"null post");
 		}
 		try {
+			if(post.getFieldsMap().get(BlogXPath.title)== null)
+				post.setTitle(post.getTitle());
+			if(post.getFieldsMap().get(BlogXPath.content)== null)
+				post.setContent(post.getContent());
+			
 			BaseBlogTransformer transformer = new BaseBlogTransformer(post);
 			Object 	payload = transformer.transform(post.getFieldsMap());
 			
@@ -788,7 +802,6 @@ public class BlogService extends BaseService {
 		if (AuthUtil.INSTANCE.getAuthValue(endpoint).equalsIgnoreCase(ConnectionsConstants.OAUTH)) {
 			baseUrl.append(OAUTH_URL);
 		}
-		
 		// todo : Add oauth logic
 		if(StringUtil.isNotEmpty(filterType.toString())){
 			baseUrl.append(handle).append(ConnectionsConstants.SEPARATOR).append(filterType.getFilterType());
