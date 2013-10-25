@@ -33,7 +33,6 @@ import com.ibm.sbt.services.client.connections.blogs.feedhandler.BlogPostsFeedHa
 import com.ibm.sbt.services.client.connections.blogs.feedhandler.TagFeedHandler;
 import com.ibm.sbt.services.client.connections.blogs.model.BlogXPath;
 import com.ibm.sbt.services.client.connections.blogs.transformers.BaseBlogTransformer;
-import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
 import com.ibm.sbt.services.endpoints.Endpoint;
 import com.ibm.sbt.services.util.AuthUtil;
 
