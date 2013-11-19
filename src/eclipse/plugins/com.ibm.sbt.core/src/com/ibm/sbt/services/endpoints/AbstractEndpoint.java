@@ -54,6 +54,7 @@ public abstract class AbstractEndpoint implements Endpoint, Cloneable {
     private Map<String, String> serviceMappings = new HashMap<String, String>();
     private String url;
     private String label;
+    private String name;
     private String dialogLoginPage;
     private String loginPage;
     private String loginUi;
@@ -166,6 +167,12 @@ public abstract class AbstractEndpoint implements Endpoint, Cloneable {
         this.label = label;
     }
     
+	public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
     /* (non-Javadoc)
      * @see com.ibm.sbt.services.endpoints.Endpoint#getApiVersion()
      */

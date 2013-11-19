@@ -116,6 +116,10 @@ public class BasicEndpoint extends AbstractEndpoint {
     }
 
     public String getAuthenticationPage() {
+    	if(StringUtil.isEmpty(authenticationPage)){
+    		// return default authentication page if it is not given in managed bean
+    		return "/sbt/loginForm.html"; 
+    	}
         return authenticationPage;
     }
 
@@ -158,7 +162,6 @@ public class BasicEndpoint extends AbstractEndpoint {
 
             		String redirectUrl = UrlUtil.getRequestUrl((HttpServletRequest)context.getHttpRequest());// change needed to handle portlethttprequest
             		
-            	   	String endPointName = authPage.substring(authPage.indexOf("=")+1, authPage.length());
                 	String baseUrl = UrlUtil.getBaseUrl(((HttpServletRequest)context.getHttpRequest()));
                 	String servletPath = ServiceServlet.getServletPath();
                 	String basicProxyUrl = AuthCredsHandler.URL_PATH;
@@ -166,7 +169,7 @@ public class BasicEndpoint extends AbstractEndpoint {
                 	//constructing proxy action url
                 	String postToProxy = PathUtil.concat(baseUrl, servletPath, '/');
                 	postToProxy = PathUtil.concat(postToProxy,basicProxyUrl, '/');
-                	postToProxy = PathUtil.concat(postToProxy,endPointName, '/');
+                	postToProxy = PathUtil.concat(postToProxy,this.getName(), '/'); // passing endpoint name
                 	postToProxy = PathUtil.concat(postToProxy,"JavaApp", '/');
                 	
                 	// encode URL's
@@ -174,7 +177,7 @@ public class BasicEndpoint extends AbstractEndpoint {
 		         	redirectUrl = URLEncoder.encode(redirectUrl,"UTF-8");
                 	
                 	// passing proxy action url as a parameter to the authentication page
-                	authPage = PathUtil.concat(authPage,"proxyPath",'&');
+                	authPage = PathUtil.concat(authPage,"proxyPath",'?');
                 	authPage = PathUtil.concat(authPage,postToProxy,'=');
                 	// passing redirectURL as a parameter to the authentication page
                 	authPage = PathUtil.concat(authPage,"redirectURL",'&');
