@@ -53,8 +53,8 @@ public abstract class AbstractEndpoint implements Endpoint, Cloneable {
 
     private Map<String, String> serviceMappings = new HashMap<String, String>();
     private String url;
-    private String label;
     private String name;
+    private String label;
     private String dialogLoginPage;
     private String loginPage;
     private String loginUi;
