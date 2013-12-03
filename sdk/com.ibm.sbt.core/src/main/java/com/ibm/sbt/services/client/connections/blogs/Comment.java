@@ -16,7 +16,11 @@
 
 package com.ibm.sbt.services.client.connections.blogs;
 
+import org.w3c.dom.Node;
+
 import com.ibm.commons.util.StringUtil;
+import com.ibm.commons.xml.NamespaceContext;
+import com.ibm.commons.xml.xpath.XPathExpression;
 import com.ibm.sbt.services.client.base.BaseService;
 import com.ibm.sbt.services.client.base.datahandlers.DataHandler;
 import com.ibm.sbt.services.client.connections.blogs.model.BaseBlogEntity;
@@ -43,15 +47,18 @@ public class Comment extends BaseBlogEntity {
 	public Comment(BlogService blogService, String id) {
 		super(blogService,id);
 	}
-	 /**
-     * Constructor
-     *
-     * @param BlogService
-     * @param DataHandler
-     */
-	public Comment(BaseService svc, DataHandler<?> handler) {
-		super(svc,handler);
+	/**
+	 * Constructor
+	 *  
+	 * @param BaseService
+	 * @param Node
+	 * @param NamespaceContext
+	 * @param XPathExpression
+	 */
+	public Comment(BaseService service, Node node, NamespaceContext namespaceCtx, XPathExpression xpathExpression) {
+		super(service, node, namespaceCtx, xpathExpression);
 	}
+	
 	 /**
 	* Return the value of IBM Connections blog post comment id
 	* entry document.
@@ -86,35 +93,6 @@ public class Comment extends BaseBlogEntity {
 	 		postId = postUuid;
 	 	}
 		return extractPostUuid(postId);
-	}
-	/**
-	* Return the content of the IBM Connections blog post comment from
-	* blog ATOM entry document.
-	*
-	* @method getContent
-	* @return {String} content of the Blog post comment
-	*/
-	public String getContent() throws BlogServiceException{
-		return getAsString(BlogXPath.content);
-	}
-	 /**
-	* Sets content of IBM Connections blog post comment.
-	*
-	* @method setContent
-	* @param {String} content Content of the blog post comment
-	*/
-	public void setContent(String handle) {
-        setAsString(BlogXPath.content, handle);
-    }
-	/**
-	* Return the value of IBM Connections blog post comment URL from blog ATOM
-	* entry document.
-	*
-	* @method getSelfUrl
-	* @return {String} Blog URL of the blog post comment
-	*/
-	public String getSelfUrl() throws BlogServiceException{
-		return getAsString(BlogXPath.selfUrl);
 	}
 	/**
 	* Return the Trackback Title of the IBM Connections blog post comment from

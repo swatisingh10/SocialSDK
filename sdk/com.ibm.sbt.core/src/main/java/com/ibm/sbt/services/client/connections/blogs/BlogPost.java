@@ -16,9 +16,12 @@
 
 package com.ibm.sbt.services.client.connections.blogs;
 
+import org.w3c.dom.Node;
+
 import com.ibm.commons.util.StringUtil;
+import com.ibm.commons.xml.NamespaceContext;
+import com.ibm.commons.xml.xpath.XPathExpression;
 import com.ibm.sbt.services.client.base.BaseService;
-import com.ibm.sbt.services.client.base.datahandlers.DataHandler;
 import com.ibm.sbt.services.client.connections.blogs.model.BaseBlogEntity;
 import com.ibm.sbt.services.client.connections.blogs.model.BlogXPath;
 
@@ -42,13 +45,15 @@ public class BlogPost extends BaseBlogEntity {
 		super(blogService,id);
 	}
 	/**
-     * Constructor
-     *
-     * @param BlogService
-     * @param DataHandler
-     */
-	public BlogPost(BaseService svc, DataHandler<?> handler) {
-		super(svc,handler);
+	 * Constructor
+	 *  
+	 * @param BaseService
+	 * @param Node
+	 * @param NamespaceContext
+	 * @param XPathExpression
+	 */
+	public BlogPost(BaseService service, Node node, NamespaceContext namespaceCtx, XPathExpression xpathExpression) {
+		super(service, node, namespaceCtx, xpathExpression);
 	}
 	/**
 	* Return the value of IBM Connections blogPost Uuid from blog post ATOM
@@ -60,35 +65,7 @@ public class BlogPost extends BaseBlogEntity {
 	public String getPostUuid() throws BlogServiceException{
 		return super.getUid();
 	}
-	/**
-	* Return the value of selfUrl of IBM Connections blogPost Uuid from blog post ATOM
-	* entry document.
-	*
-	* @method getSelfUrl
-	* @return selfUrl of the blog post
-	*/
-	public String getSelfUrl() throws BlogServiceException{
-		return getAsString(BlogXPath.selfUrl);
-	}
-	/**
-	* Return the content of the IBM Connections blog post from
-	* blog ATOM entry document.
-	*
-	* @method getContent
-	* @return {String} content of the Blog
-	*/
-	public String getContent() throws BlogServiceException{
-		return getAsString(BlogXPath.content);
-	}
-	/**
-	* Sets content of IBM Connections blog post.
-	*
-	* @method setContent
-	* @param {String} content Content of the blog post
-	*/
-	public void setContent(String handle) {
-        setAsString(BlogXPath.content, handle);
-    }
+
     /**
 	* Return the replies url of the IBM Connections blog post from
 	* blog ATOM entry document.
