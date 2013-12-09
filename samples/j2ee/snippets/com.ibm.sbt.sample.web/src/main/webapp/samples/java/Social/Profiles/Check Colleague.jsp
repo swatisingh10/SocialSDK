@@ -39,7 +39,7 @@
 		ColleagueConnectionList colleagues = connProfSvc.getColleagueConnections(sourceUserId);
 		if(colleagues != null && ! colleagues.isEmpty()) {
 			ColleagueConnection colleague = colleagues.iterator().next();
-			targetUserId = colleague.getContributorUserId();
+			targetUserId = colleague.getAuthor().getId();
 			ColleagueConnection connection = connProfSvc.checkColleague(sourceUserId, targetUserId);
 			out.println("connection Id : "+connection.getConnectionId());
 		}
@@ -47,6 +47,7 @@
 			out.println("no colleagues exist for the user");
 		
 	}  catch (Throwable e) {
+			e.printStackTrace();
 			out.println("<pre>");
 			out.println(e.getMessage());
 			out.println("</pre>");
