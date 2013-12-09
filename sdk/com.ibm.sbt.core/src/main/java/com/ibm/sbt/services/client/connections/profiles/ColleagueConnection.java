@@ -51,7 +51,7 @@ public class ColleagueConnection extends AtomEntity{
 		return id;
 	}
 	/**
-	 * sets Connection Id
+	 * sets Connection Id for the ColleagueConnection
 	 */
 	public void setConnectionId(String connectionId) {
 		setAsString(AtomXPath.id, connectionId);
