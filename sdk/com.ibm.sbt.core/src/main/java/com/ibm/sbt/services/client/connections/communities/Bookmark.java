@@ -1,8 +1,11 @@
 package com.ibm.sbt.services.client.connections.communities;
 
-import com.ibm.sbt.services.client.base.BaseEntity;
-import com.ibm.sbt.services.client.base.datahandlers.DataHandler;
-import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
+import org.w3c.dom.Node;
+
+import com.ibm.commons.xml.NamespaceContext;
+import com.ibm.commons.xml.xpath.XPathExpression;
+import com.ibm.sbt.services.client.base.AtomEntity;
+import com.ibm.sbt.services.client.base.BaseService;
 
 /**
  * This File represents Community Bookmark
@@ -10,52 +13,15 @@ import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
  * @author Swati Singh
  */
 
-public class Bookmark extends BaseEntity{
-
+public class Bookmark extends AtomEntity{
 
 	public Bookmark(CommunityService communityService, String id) {
-		setService(communityService);
-		setAsString(CommunityXPath.id, id);
-	}
-	
-	public Bookmark(CommunityService svc, DataHandler<?> handler)
-	{
-		super(svc,handler);
-	}
-	
-	
-	/**
-	 * getId
-	 * 
-	 * @return id
-	 */	
-	public String getId() {
-		return getAsString(CommunityXPath.id);
-	}
-	
-	/**
-	 * getTitle
-	 * 
-	 * @return title
-	 */	
-	public String getTitle() {
-		return getAsString(CommunityXPath.title);
+		super(communityService, id);
 	}
 
-	/**
-	 * getSummary
-	 * 
-	 * @return summary
-	 */	
-	public String getSummary() {
-		return getAsString(CommunityXPath.summary);
+	public Bookmark(BaseService service, Node node, NamespaceContext namespaceCtx, XPathExpression xpathExpression) {
+		super(service, node, namespaceCtx, xpathExpression);
 	}
-
-	/**
-	 * Method sets the bookmark title
-	 */	
-	public void setTitle(String title) {
-		setAsString(CommunityXPath.title, title);
-	}
+	
 
 }

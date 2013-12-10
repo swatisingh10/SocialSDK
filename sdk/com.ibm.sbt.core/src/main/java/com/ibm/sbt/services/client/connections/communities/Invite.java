@@ -1,8 +1,13 @@
 package com.ibm.sbt.services.client.connections.communities;
 
+import org.w3c.dom.Node;
+
 import com.ibm.commons.util.StringUtil;
-import com.ibm.sbt.services.client.base.BaseEntity;
-import com.ibm.sbt.services.client.base.datahandlers.DataHandler;
+import com.ibm.commons.xml.NamespaceContext;
+import com.ibm.commons.xml.xpath.XPathExpression;
+import com.ibm.sbt.services.client.base.AtomEntity;
+import com.ibm.sbt.services.client.base.BaseService;
+import com.ibm.sbt.services.client.base.datahandlers.XmlDataHandler;
 import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
 
 /**
@@ -11,7 +16,7 @@ import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
  * @author Swati Singh
  */
 
-public class Invite extends BaseEntity{
+public class Invite extends AtomEntity{
 	 /**
      * The UUID of the community associated with this Invite
      */
@@ -22,18 +27,24 @@ public class Invite extends BaseEntity{
 	private String inviteeUuid;
 	
 	public Invite(CommunityService communityService) {
+		super(communityService);
 		setService(communityService);
 	}
 
 	public Invite(CommunityService communityService, String id) {
+		super(communityService, id);
 		setService(communityService);
 		setAsString(CommunityXPath.id, id);
 	}
 	
-	public Invite(CommunityService svc, DataHandler<?> handler)
+	public Invite(CommunityService svc, XmlDataHandler handler)
 	{
 		super(svc,handler);
 	}
+	public Invite(BaseService service, Node node, NamespaceContext namespaceCtx, XPathExpression xpathExpression) {
+		super(service, node, namespaceCtx, xpathExpression);
+	}
+
 	/**
      * Return the value of IBM Connections invite ID from invite ATOM
      * entry document.

@@ -17,15 +17,15 @@ package com.ibm.sbt.services.client.connections.communities.feedhandler;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
 import com.ibm.commons.xml.xpath.XPathExpression;
+import com.ibm.sbt.services.client.base.AtomXPath;
 import com.ibm.sbt.services.client.base.ConnectionsConstants;
 import com.ibm.sbt.services.client.base.IFeedHandler;
 import com.ibm.sbt.services.client.connections.communities.Community;
 import com.ibm.sbt.services.client.connections.communities.CommunityList;
 import com.ibm.sbt.services.client.connections.communities.CommunityService;
-import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
 import com.ibm.sbt.services.client.Response;
-import com.ibm.sbt.services.client.base.datahandlers.XmlDataHandler;
 
 /**
  * 
@@ -61,10 +61,8 @@ public class CommunityFeedHandler implements IFeedHandler {
 	 */
 	@Override
 	public Community createEntityFromData(Object data) {
-		Node node = (Node)data;
-		XPathExpression expr = (data instanceof Document) ? (XPathExpression)CommunityXPath.entry.getPath() : null;
-		XmlDataHandler handler = new XmlDataHandler(node, ConnectionsConstants.nameSpaceCtx, expr);
-		Community community = new Community(service, handler);
+		XPathExpression xpath = (data instanceof Document) ? (XPathExpression)AtomXPath.singleEntry.getPath() : null;
+		Community community = new Community(service, (Node)data, ConnectionsConstants.nameSpaceCtx, xpath);
 		return community;
 	}
 

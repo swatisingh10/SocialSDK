@@ -17,8 +17,8 @@ package com.ibm.sbt.services.client.connections.communities;
 
 import com.ibm.commons.util.StringUtil;
 import com.ibm.sbt.services.client.base.datahandlers.XmlDataHandler;
-import com.ibm.sbt.services.client.base.BaseEntity;
 import com.ibm.sbt.services.client.base.datahandlers.DataHandler;
+import com.ibm.sbt.services.client.connections.common.Person;
 import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
 
 /**
@@ -28,7 +28,7 @@ import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
  * @author Manish Kataria
  * @author Carlos Manias
  */
-public class Member extends BaseEntity {
+public class Member extends Person {
 	
 	/**
      * The Uuid of the community associated with this Member
@@ -48,7 +48,8 @@ public class Member extends BaseEntity {
 			setEmail(id);
 		}
 		else{
-			setUserid(id);
+			setUserId(id);
+	//		setUserid(id);
 		}
 	}
 	
@@ -139,12 +140,12 @@ public class Member extends BaseEntity {
 		
 	public Member load() throws CommunityServiceException
 	{
-	  	return getService().getMember(getCommunityUuid(), getUserid());
+	  	return getService().getMember(getCommunityUuid(), getId());
 	}
 	 
 	public void remove() throws CommunityServiceException
 	{
-	  	getService().removeMember(getCommunityUuid(), getUserid());
+	  	getService().removeMember(getCommunityUuid(), getId());
 	}
 	
 	@Override

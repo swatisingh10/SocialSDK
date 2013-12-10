@@ -17,7 +17,11 @@ package com.ibm.sbt.services.client.connections.communities.feedhandler;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import com.ibm.commons.xml.NamespaceContext;
 import com.ibm.commons.xml.xpath.XPathExpression;
+import com.ibm.sbt.services.client.base.AtomXPath;
+import com.ibm.sbt.services.client.base.BaseService;
 import com.ibm.sbt.services.client.base.ConnectionsConstants;
 import com.ibm.sbt.services.client.base.IFeedHandler;
 import com.ibm.sbt.services.client.connections.communities.Invite;
@@ -25,7 +29,6 @@ import com.ibm.sbt.services.client.connections.communities.InviteList;
 import com.ibm.sbt.services.client.connections.communities.CommunityService;
 import com.ibm.sbt.services.client.connections.communities.model.CommunityXPath;
 import com.ibm.sbt.services.client.Response;
-import com.ibm.sbt.services.client.base.datahandlers.XmlDataHandler;
 
 /**
  * 
@@ -61,13 +64,12 @@ public class InviteFeedHandler implements IFeedHandler {
 	 */
 	@Override
 	public Invite createEntityFromData(Object data) {
-		Node node = (Node)data;
-		XPathExpression expr = (data instanceof Document) ? (XPathExpression)CommunityXPath.entry.getPath() : null;
-		XmlDataHandler handler = new XmlDataHandler(node, ConnectionsConstants.nameSpaceCtx, expr);
-		Invite invite = new Invite(service, handler);
+		XPathExpression expr = (data instanceof Document) ? (XPathExpression)AtomXPath.entry.getPath() : null;
+		Invite invite = new Invite(service, (Node)data, ConnectionsConstants.nameSpaceCtx, expr);
 		return invite;
 	}
-
+	
+	
 	/**
 	 * @param data object
 	 * @return Collection of community Invitations
