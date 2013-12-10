@@ -25,22 +25,44 @@ public class Invite extends AtomEntity{
      * The UUID if the invitee associated with this Invite
      */
 	private String inviteeUuid;
-	
+	/**
+	 * Constructor
+	 *  
+	 * @param communityService
+	 */
 	public Invite(CommunityService communityService) {
 		super(communityService);
 		setService(communityService);
 	}
-
+	/**
+	 * Constructor
+	 *  
+	 * @param CommunityService
+	 * @param id
+	 */
 	public Invite(CommunityService communityService, String id) {
 		super(communityService, id);
 		setService(communityService);
 		setAsString(CommunityXPath.id, id);
 	}
-	
+	/**
+	 * Constructor
+	 *  
+	 * @param communityService
+	 * @param XmlDataHandler
+	 */
 	public Invite(CommunityService svc, XmlDataHandler handler)
 	{
 		super(svc,handler);
 	}
+	/**
+	 * Constructor
+	 *  
+	 * @param BaseService
+	 * @param Node
+	 * @param NamespaceContext
+	 * @param XPathExpression
+	 */
 	public Invite(BaseService service, Node node, NamespaceContext namespaceCtx, XPathExpression xpathExpression) {
 		super(service, node, namespaceCtx, xpathExpression);
 	}
